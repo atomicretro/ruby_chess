@@ -33,12 +33,12 @@ MOVES = {
 
 class Cursor
 
-  attr_reader :cursor_pos, :board
+  attr_reader :cursor_pos, :game
 
-  def initialize(cursor_pos, board)
+  def initialize(cursor_pos, game)
     # cursor_pos is [x,y]
     @cursor_pos = cursor_pos
-    @board = board
+    @game = game
   end
 
   def get_input
@@ -84,6 +84,7 @@ class Cursor
   end
 
   def handle_key(key)
+    # debugger
     case key
       when :return, :space
         cursor_pos
@@ -101,36 +102,10 @@ class Cursor
     # dif is [+-1, +- 1]
     x, y = diff
     check_pos = [@cursor_pos[0] + x , @cursor_pos[1] + y]
-    
-    if board.valid_pos?(check_pos)
+
+    if game.valid_pos?(check_pos)
       @cursor_pos[0] += x
       @cursor_pos[1] += y
     end
   end
 end
-
-
-
-
-# KEYMAP = {
-#   " " => :space,
-#   "h" => :left,
-#   "j" => :down,
-#   "k" => :up,
-#   "l" => :right,
-#   "w" => :up,
-#   "a" => :left,
-#   "s" => :down,
-#   "d" => :right,
-#   "\t" => :tab,
-#   "\r" => :return,
-#   "\n" => :newline,
-#   "\e" => :escape,
-#   "\e[A" => :up,
-#   "\e[B" => :down,
-#   "\e[C" => :right,
-#   "\e[D" => :left,
-#   "\177" => :backspace,
-#   "\004" => :delete,
-#   "\u0003" => :ctrl_c,
-# }

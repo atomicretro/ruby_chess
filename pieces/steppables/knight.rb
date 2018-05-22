@@ -6,8 +6,8 @@ class Knight < ChessPiece # brain slug symbol (BSS)
   include Steppable # ModuleName
 
   def initialize(color, pos)
-    symbol_update = (color == :white ?  "8" : "E")
-    super(color, pos, symbol_update)
+    symbol_code = "265E"
+    super(color, pos, symbol_code)
     # => ChessPiece.new(color, pos, symbol)
   end
 

@@ -1,12 +1,12 @@
 require_relative '../chess_piece'
 require_relative 'slidable'
 
-class Queen < ChessPiece
+class Rook < ChessPiece
   include Slidable
 
   def initialize(color, pos)
-    symbol_update = (color == :white ?  "5" : "B")
-    super(color, pos, symbol_update)
+    symbol_code = "265C"
+    super(color, pos, symbol_code)
     # => ChessPiece.new(color, pos, symbol)
   end
 

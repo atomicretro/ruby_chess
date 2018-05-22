@@ -1,11 +1,11 @@
 require 'byebug'
 require 'colorize'
 # require_relative '../pieces/chess_piece'
-require_relative '../pieces/steppables/step_require_helper'
-require_relative '../pieces/sliders/slide_require_helper'
+require_relative '../pieces/steppables/steppables_helper'
+require_relative '../pieces/slidables/slidables_helper'
 require_relative "../pieces/pawn"
 
-class Board
+class Game
   PIECES_POS = [
     :Rook, :Knight, :Bishop, :King, :Queen, :Bishop, :Knight, :Rook
   ]

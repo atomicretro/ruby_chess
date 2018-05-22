@@ -1,13 +1,12 @@
-require_relative 'queen'
-require_relative 'bishop'
-require_relative 'rook'
+require_relative './slidables/slidables_helper'
+require_relative './steppables/steppables_helper'
 
 if __FILE__ == $PROGRAM_NAME
   q = Queen.new(:black, [0,4])
   b = Bishop.new(:black, [0,2])
   r = Rook.new(:black, [0,0])
 
-  p q
+  p r
 
   q.move([7,4]) # good pos
   p q.current_pos

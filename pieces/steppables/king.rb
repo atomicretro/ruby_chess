@@ -5,8 +5,8 @@ class King < ChessPiece
   include Steppable
 
   def initialize(color, pos)
-    symbol_update = (color == :white ?  "4" : "A")
-    super(color, pos, symbol_update)
+    symbol_code = "265A"
+    super(color, pos, symbol_code)
     # => ChessPiece.new(color, pos, symbol)
   end
 
