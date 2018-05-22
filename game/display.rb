@@ -27,7 +27,7 @@ class Display
 
       0.upto(7) do |y|
         val = board_colorize(x,y)
-        temp_arr << ["#{val} "]
+        temp_arr << ["#{val}"]
       end
 
       print_arr << temp_arr
@@ -49,10 +49,10 @@ class Display
   end
 
   def render_cursor!(print_arr)
-    cus_x, cus_y = cursor.cursor_pos
-    print_arr_val = print_arr[cus_x][cus_y][0]
+    cursor_x, cursor_y = cursor.cursor_pos
+    print_arr_val = print_arr[cursor_x][cursor_y][0]
 
-    print_arr[cus_x][cus_y][0] = print_arr_val.colorize(:black).on_cyan
+    print_arr[cursor_x][cursor_y][0] = print_arr_val.on_cyan
   end
 
   def board_colorize(x,y)
@@ -72,6 +72,8 @@ if __FILE__ == $PROGRAM_NAME
   input = display.cursor.get_input
   until input == :crtl_c
     puts " "
+    board.in_check?(:white)
+    # byebug
     display.render
     input = display.cursor.get_input
   end

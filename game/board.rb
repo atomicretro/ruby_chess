@@ -93,7 +93,14 @@ class Board
   #  end
 
   def in_check?(color)
+    king = nil
+    board.each do |row|
+      row.each do |piece|
+        king = piece if piece.class.name == "King" && piece.color == color
+      end
+    end
     byebug
+    king
   end
 
 private
@@ -123,7 +130,7 @@ private
   end
 
   def check_start_pos(start_pos) #make error more detailed
-    #returns true if end_pos is ChessPiece
+    #returns true if start_pos is ChessPiece
     return true if self[start_pos].is_a?(ChessPiece)
     raise StandardError.new("Start_pos Error")
   end

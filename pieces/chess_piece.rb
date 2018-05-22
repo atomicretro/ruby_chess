@@ -8,12 +8,9 @@ class ChessPiece
   attr_accessor :current_pos, :symbol
 
   def initialize(color, current_pos=nil, symbol_code)
-    # symbol_update changes per child ("8"|"E" for knight, etc.)
-
     # board.new ([pieces] << piece.child.new(color, pos) )
-    # type var if it steps, slides, pawn, or null
-    update_pos(current_pos)
     @color = color
+    update_pos(current_pos)
     @symbol = [(symbol_code).hex].pack("U")
   end
 
@@ -22,7 +19,7 @@ class ChessPiece
   end
 
   def update_and_return_pos(pos)
-    self.update_pos(pos)
+    update_pos(pos)
     pos
   end
 
