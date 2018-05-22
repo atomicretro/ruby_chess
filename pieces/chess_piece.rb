@@ -17,8 +17,13 @@ class ChessPiece
     @symbol = [(symbol_code).hex].pack("U")
   end
 
-  def move(diff)
-    puts "You shouldn't be here!"
+  def move(to_pos)
+    valid_move?(to_pos) ? update_and_return_pos(to_pos) : false
+  end
+
+  def update_and_return_pos(pos)
+    self.update_pos(pos)
+    pos
   end
 
   def update_pos(new_pos)

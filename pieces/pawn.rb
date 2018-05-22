@@ -13,15 +13,6 @@ class Pawn < ChessPiece
     # => ChessPiece.new(color, pos, symbol)
   end
 
-  def move(to_pos)
-    valid_move?(to_pos) ? update_and_return_pos(to_pos) : false
-  end
-
-  def update_and_return_pos(pos)
-    self.update_pos(pos)
-    pos
-  end
-
   def valid_move?(to_pos)
     # valid move must be in same column
     to_x, to_y = to_pos
