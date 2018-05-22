@@ -14,18 +14,17 @@ class Pawn < ChessPiece
   end
 
   def move(to_pos)
-    # current_pos +- 1 y
-    x, y = to_pos
-    if valid_move?(x, y)
-      self.update_pos(to_pos)
-      return to_pos
-    else
-      false
-    end
+    valid_move?(to_pos) ? update_and_return_pos(to_pos) : false
   end
 
-  def valid_move?(to_x, to_y)
+  def update_and_return_pos(pos)
+    self.update_pos(pos)
+    pos
+  end
+
+  def valid_move?(to_pos)
     # valid move must be in same column
+    to_x, to_y = to_pos
     to_y == current_y ? (current_x - to_x).abs <= max_move : false
   end
 
@@ -34,16 +33,11 @@ class Pawn < ChessPiece
     row == 1 || row == 6 ? 2 : 1
   end
 
-  def attack_move(attack_pos)
-    if valid_attack?(attack_pos)
-      self.update_pos(attack_pos)
-      attack_pos
-    else
-      false
-    end
+  def attack(pos)
+    valid_attack?(pos) ? update_and_return_pos(pos) : false
   end
 
-  def valid_attack?(attack_pos)
-    ATTACKS_OFFSET.any? { |move| move == attack_pos }
+  def valid_attack?(pos)
+    ATTACKS_OFFSET.any? { |move| move == pos }
   end
 end
