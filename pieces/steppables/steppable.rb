@@ -1,18 +1,18 @@
 require 'byebug'
 
 module Steppable
-  KNIGHTS_OFF = [
-    [-1,-2], [1,-2],
-    [-2,-1], [2,-1],
-    [-2,-1], [2,1],
-    [-1, 2], [1,2]
+  KNIGHTS_OFFSET = [
+    [-1, -2], [1, -2],
+    [-2, -1], [2, -1],
+    [-2, -1], [2,  1],
+    [-1,  2], [1,  2]
   ]
 
-  KINGS_OFF = [
+  KINGS_OFFSET = [
     # moves from center, [+0-,+0-] in all directions
-    [-1,-1], [-1,0], [-1, 1],
-    [0, -1],         [0, 1],
-    [1, -1], [1, 0], [1, 1],
+    [-1, -1], [-1, 0], [-1, 1],
+    [ 0, -1],          [ 0, 1],
+    [ 1, -1], [1,  0], [ 1, 1],
   ]
 
   def move(to_pos)
@@ -20,7 +20,7 @@ module Steppable
     # relative to move_module
     if valid_move?(x, y)
       self.update_pos(to_pos)  # update self to new_pos
-      return to_pos             # return to board
+      return to_pos            # return to board
     else
       return false
     end
@@ -38,9 +38,9 @@ module Steppable
 
   def king_or_knave
     if self.is_a?(King)
-      return KINGS_OFF
+      return KINGS_OFFSET
     elsif self.is_a?(Knight)
-      return KNIGHTS_OFF
+      return KNIGHTS_OFFSET
     else
       raise "Steppable class error."
     end

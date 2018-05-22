@@ -1,22 +1,22 @@
 require 'byebug'
 
 module Slidable
-  QUEENS_OFF = [
+  QUEENS_OFFSET = [
     -135, 180, 135,
-    -90,       90,
-    -45,   0,  45
+     -90,       90,
+     -45,   0,  45
   ]
 
-  BISHOPS_OFF = [
+  BISHOPS_OFFSET = [
     -135,     135,
 
-    -45,       45
+     -45,      45
   ]
 
-  ROOKS_OFF = [
+  ROOKS_OFFSET = [
           180,
-    -90,       90,
-           0
+     -90,      90,
+            0
   ]
 
 def get_degree(to_pos)
@@ -56,11 +56,11 @@ end
 
   def which_slider
     if self.is_a?(Queen)
-      return QUEENS_OFF
+      return QUEENS_OFFSET
     elsif self.is_a?(Bishop)
-      return BISHOPS_OFF
+      return BISHOPS_OFFSET
     elsif self.is_a?(Rook)
-      return ROOKS_OFF
+      return ROOKS_OFFSET
     else
       raise "Slidable class error."
     end

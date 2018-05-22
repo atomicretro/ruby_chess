@@ -17,51 +17,27 @@ class Pawn < ChessPiece
     # current_pos +- 1 y
     x, y = to_pos
     if valid_move?(x, y)
-      self.update_pos(to_pos) # update self to new_pos
+      self.update_pos(to_pos)
       return to_pos
     else
       false
     end
   end
 
-  def valid_move?(x, y)
-    if y == current_pos[1]
-      case color
-        when :white
-          move_one, move_two = -1,-2
-        when :black
-          move_one, move_two = 1,2
-        else
-          raise "Bad pawn color"
-      end #case end
-
-      case check_max_move
-        when 1
-          return current_pos[0] == x + move_one
-        when 2
-          return current_pos[0] == x + move_two
-        else
-          return false
-      end #case end
-    end
-
-    return false
+  def valid_move?(to_x, to_y)
+    # valid move must be in same column
+    to_y == current_y ? (current_x - to_x).abs <= max_move : false
   end
 
-  def check_max_move
-    # if row == 1 or 6, max_move == 2 : max_move == 1
-    case current_pos[0]
-      when 1, 6
-        return 2
-      else
-        return 1
-    end #case end
+  def max_move
+    row = current_pos[0]
+    row == 1 || row == 6 ? 2 : 1
   end
 
   def attack_move(attack_pos)
     if valid_attack?(attack_pos)
-      self.update_pos(attack_pos)  # update self to new_pos
-      return attack_pos
+      self.update_pos(attack_pos)
+      attack_pos
     else
       false
     end
@@ -70,5 +46,4 @@ class Pawn < ChessPiece
   def valid_attack?(attack_pos)
     ATTACKS_OFFSET.any? { |move| move == attack_pos }
   end
-
-end # class end
+end

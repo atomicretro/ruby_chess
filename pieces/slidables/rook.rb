@@ -9,5 +9,4 @@ class Rook < ChessPiece
     super(color, pos, symbol_code)
     # => ChessPiece.new(color, pos, symbol)
   end
-
-end # class end
+end

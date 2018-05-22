@@ -4,7 +4,7 @@ require 'singleton'
 # Also contains NullPiece Class
 
 class ChessPiece
-  attr_reader :color
+  attr_reader :color, :current_x, :current_y
   attr_accessor :current_pos, :symbol
 
   def initialize(color, current_pos=nil, symbol_code)
@@ -12,7 +12,7 @@ class ChessPiece
 
     # board.new ([pieces] << piece.child.new(color, pos) )
     # type var if it steps, slides, pawn, or null
-    @current_pos = current_pos
+    update_pos(current_pos)
     @color = color
     @symbol = [(symbol_code).hex].pack("U")
   end
@@ -23,6 +23,8 @@ class ChessPiece
 
   def update_pos(new_pos)
     @current_pos = new_pos
+    @current_x = new_pos[0]
+    @current_y = new_pos[1]
   end
 
   def display
