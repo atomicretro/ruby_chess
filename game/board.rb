@@ -92,15 +92,37 @@ class Board
   #    end
   #  end
 
-  def in_check?(color)
-    king = nil
+  def in_check?(my_color)
+    their_pawns, their_pieces = [], []
+    my_king = get_pieces_for_check(my_color, their_pawns, their_pieces)
+
+    their_pawns.each do |pawn|
+      return true if pawn.valid_attack?(my_king.current_pos)
+    end
+
+    their_pieces.each do |piece|
+      return true if piece.valid_move?(my_king.current_pos)
+    end
+
+    false
+  end
+
+  def get_pieces_for_check(my_color, their_pawns, their_pieces)
+    my_king = nil
+    my_color == :white ? their_color = :black : their_color = :white
+
     board.each do |row|
       row.each do |piece|
-        king = piece if piece.class.name == "King" && piece.color == color
+        name = piece.class.name
+        color = piece.color
+
+        my_king = piece if name == "King" && color == my_color
+        their_pawns << piece if name == "Pawn" && color == their_color
+        their_pieces << piece if name != "Pawn" && color == their_color
       end
     end
-    byebug
-    king
+
+    my_king
   end
 
 private
