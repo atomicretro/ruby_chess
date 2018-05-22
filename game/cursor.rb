@@ -33,23 +33,18 @@ MOVES = {
 
 class Cursor
 
-  attr_reader :cursor_pos, :game
+  attr_reader :cursor_pos, :board
 
-  def initialize(cursor_pos, game)
+  def initialize(cursor_pos, board)
     # cursor_pos is [x,y]
     @cursor_pos = cursor_pos
-    @game = game
+    @board = board
   end
 
   def get_input
     key = KEYMAP[read_char]
     handle_key(key)
   end
-
-  # developer #
-  # def man_update_pos(pos)
-  #   update_pos(pos)
-  # end
 
   private
 
@@ -84,7 +79,6 @@ class Cursor
   end
 
   def handle_key(key)
-    # debugger
     case key
       when :return, :space
         cursor_pos
@@ -95,15 +89,15 @@ class Cursor
       when :ctrl_c
         puts "Exiting program."
         Process.exit(0)
-    end # case end
+    end
   end
 
   def update_pos(diff)
-    # dif is [+-1, +- 1]
+    # dif is [+-1, +-1]
     x, y = diff
     check_pos = [@cursor_pos[0] + x , @cursor_pos[1] + y]
 
-    if game.valid_pos?(check_pos)
+    if board.valid_pos?(check_pos)
       @cursor_pos[0] += x
       @cursor_pos[1] += y
     end

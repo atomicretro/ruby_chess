@@ -1,16 +1,15 @@
 require 'byebug'
 require 'colorize'
 require_relative 'cursor'
-require_relative 'game'
+require_relative 'board'
 require_relative '../pieces/chess_piece'
 
 class Display
-  attr_reader :game, :board, :cursor
+  attr_reader :board, :cursor
 
-  def initialize(game)
-    @game = game
-    @board = game.board
-    @cursor = Cursor.new([0,0], game)
+  def initialize(board)
+    @board = board.board
+    @cursor = Cursor.new([0,0], board)
   end
 
   def render
@@ -46,7 +45,7 @@ class Display
       puts "#{pretty_row}"
     end
 
-    puts "\nType yo move in why don't ya. #{self.cursor.cursor_pos}"
+    puts "\nMake yo move why don't ya. #{self.cursor.cursor_pos}"
   end
 
   def render_cursor!(print_arr)
@@ -67,13 +66,13 @@ class Display
 end # class end
 
 if __FILE__ == $PROGRAM_NAME
-  game = Game.new
-  disp = Display.new(game)
-  disp.render
-  input = disp.cursor.get_input
+  board = Board.new
+  display = Display.new(board)
+  display.render
+  input = display.cursor.get_input
   until input == :crtl_c
     puts " "
-    disp.render
-    input = disp.cursor.get_input
+    display.render
+    input = display.cursor.get_input
   end
 end

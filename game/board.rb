@@ -1,12 +1,12 @@
 require 'byebug'
 require 'colorize'
-# require_relative '../pieces/chess_piece'
-require_relative '../pieces/steppables/steppables_helper'
-require_relative '../pieces/slidables/slidables_helper'
-require_relative "../pieces/pawn"
 
-class Game
-  PIECES_POS = [
+require_relative "../pieces/pawn"
+require_relative '../pieces/slidables/slidables_helper'
+require_relative '../pieces/steppables/steppables_helper'
+
+class Board
+  BACK_ROW_PIECES = [
     :Rook, :Knight, :Bishop, :King, :Queen, :Bishop, :Knight, :Rook
   ]
 
@@ -22,14 +22,14 @@ class Game
   end
 
   def []=(pos,piece)
-    x,y = pos
+    x, y = pos
     board[x][y] = piece
   end
 
   def make_and_fill_board
-    temp_board = Array.new(8) { Array.new(8) }
+    board_to_return = Array.new(8) { Array.new(8) }
 
-    temp_board.map.with_index do |row, row_i|
+    board_to_return.map.with_index do |row, row_i|
       row.map.with_index do |col, col_i|
         case row_i
           when 0, 7
@@ -41,30 +41,20 @@ class Game
         end
       end
     end
-  end # make and fill board END
+  end
 
   def place_piece(row_i, col_i)
-    # Knight.new(:white, [0,0])
-    # a;lksda;ls(color, [row_i, col_i])
     color = (row_i == 0 ? :white : :black)
-
-    # PIECES == :Rook, etc.
-    cur_class = PIECES_POS[col_i]
-    # Converts to class_name_object_thing
-    cur_class = Kernel.const_get(cur_class)
-    # Makes a new piece of class, color, indexes
-    new_piece = cur_class.new(color, [row_i, col_i])
-    return new_piece
+    current_class = BACK_ROW_PIECES[col_i]
+    current_class = Kernel.const_get(current_class)
+    # => Converts symbol to class object
+    current_class.new(color, [row_i, col_i])
   end
 
   def place_pawn(row_i, col_i)
     color = (row_i == 1 ? :white : :black)
-    # Makes a new piece of class, color, indexes
-    new_piece = Pawn.new(color, [row_i, col_i])
-    return new_piece
+    Pawn.new(color, [row_i, col_i])
   end
-
-
 
   def move_piece
     begin
@@ -75,7 +65,6 @@ class Game
       puts "#{e}: Invalid move, try again."
       retry
     end
-    #
 
     # flip pieces ## @set = draw
     self[end_pos], self[start_pos] = self[start_pos], self[end_pos]
@@ -102,6 +91,10 @@ class Game
   #
   #    end
   #  end
+
+  def in_check?(color)
+    byebug
+  end
 
 private
   def get_moves
@@ -140,12 +133,4 @@ private
     return true if self[end_pos].is_a?(NullPiece)
     raise StandardError.new("End_pos Error")
   end
-
 end # class end
-
-
-if __FILE__ == $PROGRAM_NAME
-  b = Board.new
-  b.move_piece
-  b.display
-end

@@ -2,8 +2,7 @@ require 'byebug'
 require_relative 'chess_piece'
 
 class Pawn < ChessPiece
-
-  ATTACKS_OFF = [
+  ATTACKS_OFFSET = [
     [-1,-1], [-1, 1],
     [ 1,-1], [ 1, 1]
   ]
@@ -69,7 +68,7 @@ class Pawn < ChessPiece
   end
 
   def valid_attack?(attack_pos)
-    ATTACKS_OFF.any? { |move| move == attack_pos }
+    ATTACKS_OFFSET.any? { |move| move == attack_pos }
   end
 
 end # class end
