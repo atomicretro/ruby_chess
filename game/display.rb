@@ -69,12 +69,13 @@ if __FILE__ == $PROGRAM_NAME
   board = Board.new
   display = Display.new(board)
   display.render
-  input = display.cursor.get_input
+  input = nil
   until input == :crtl_c
     puts " "
-    board.in_check?(:white)
-    # byebug
+    board.in_check?
+    board.current_player.rotate
+    # selected = display.cursor.cursor_pos
     display.render
-    input = display.cursor.get_input
+    input = board.move_piece
   end
 end
