@@ -23,6 +23,7 @@ class Board
   ]
 
   attr_accessor :board
+  attr_reader :current_player
 
   def initialize
     @board = make_and_fill_board
@@ -75,10 +76,11 @@ class Board
 
   def move_piece
     begin
-      byebug
+      # byebug
       start_pos, end_pos = get_moves
       valid_start?(start_pos)
       valid_end?(end_pos)
+      self[start_pos].move(end_pos)
     rescue StandardError => e
       puts "#{e}: Invalid move, try again."
       retry
@@ -105,7 +107,7 @@ class Board
     false
   end
 
-  def get_pieces_for_check(my_color, their_pawns, their_pieces)
+  def get_pieces_for_check(their_pawns, their_pieces)
     my_king = nil
     my_color, their_color = current_player.first, current_player.last
 
@@ -154,7 +156,13 @@ private
   end
 
   def valid_end?(end_pos)
-    return true if self[end_pos].is_a?(NullPiece)
-    raise EndPositionError
+    pos = self[end_pos]
+    if pos.is_a?(NullPiece)
+      true
+    elsif pos.is_a?(ChessPiece) && pos.color == current_player.last
+      true
+    else
+      raise EndPositionError
+    end
   end
 end # class end

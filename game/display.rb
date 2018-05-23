@@ -70,12 +70,13 @@ if __FILE__ == $PROGRAM_NAME
   display = Display.new(board)
   display.render
   input = nil
-  until input == :crtl_c
+  until input == :crtl_c # MOVE IS INTERPRETED CORRECTLY BUT PIECES WON'T MOVE ===WHYYYY
+    puts "It's #{board.current_player.first}'s turn."
     puts " "
     board.in_check?
-    board.current_player.rotate
+    input = board.move_piece
+    board.current_player.rotate!
     # selected = display.cursor.cursor_pos
     display.render
-    input = board.move_piece
   end
 end

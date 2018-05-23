@@ -3,6 +3,12 @@ require 'singleton'
 # ChessPiece Master Class
 # Also contains NullPiece Class
 
+class MoveError < StandardError
+  def initialize(msg="Invalid movement attempted")
+    super
+  end
+end
+
 class ChessPiece
   attr_reader :color, :current_x, :current_y
   attr_accessor :current_pos, :symbol
@@ -15,7 +21,8 @@ class ChessPiece
   end
 
   def move(to_pos)
-    valid_move?(to_pos) ? update_and_return_pos(to_pos) : false
+    # byebug
+    valid_move?(to_pos) ? update_and_return_pos(to_pos) : MoveError
   end
 
   def update_and_return_pos(pos)

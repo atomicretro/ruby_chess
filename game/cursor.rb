@@ -93,11 +93,10 @@ class Cursor
   end
 
   def update_pos(diff)
-    # dif is [+-1, +-1]
     x, y = diff
-    check_pos = [@cursor_pos[0] + x , @cursor_pos[1] + y]
+    attempted_pos = [@cursor_pos[0] + x , @cursor_pos[1] + y]
 
-    if board.valid_pos?(check_pos)
+    if board.valid_pos?(attempted_pos)
       @cursor_pos[0] += x
       @cursor_pos[1] += y
     end
